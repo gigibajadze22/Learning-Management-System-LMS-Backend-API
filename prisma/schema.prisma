@@ -1,0 +1,58 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql" // თუ სხვაა, ჩაანაცვლე შენს მიხედვით
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id       String  @id @default(uuid())
+  name     String
+  email    String  @unique
+  password String
+  role     String  @default("student")
+  avatar   String?
+}
+
+model Course {
+  id          String   @id @default(uuid())
+  title       String
+  description String
+  createdBy   String // instructorId იქნება ამ ველში
+  students    String[] // მომხმარებლების ID-ები მასივში
+}
+
+model Lecture {
+  id          String   @id @default(uuid())
+  title       String
+  content     String
+  courseId    String
+  videoUrl    String?
+  attachments String[] // ფაილების URL-ები ან id-ები შეიძლება
+}
+
+model Assignment {
+  id          String   @id @default(uuid())
+  title       String
+  description String
+  courseId    String
+  dueDate     DateTime
+}
+
+model Submission {
+  id           String   @id @default(uuid())
+  assignmentId String
+  studentId    String
+  file         String
+  submittedAt  DateTime @default(now())
+  grade        Int?
+}
+
+model File {
+  id         String @id @default(uuid())
+  filename   String
+  url        String
+  uploadedBy String
+}
