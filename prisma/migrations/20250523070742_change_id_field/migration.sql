@@ -1,0 +1,16 @@
+-- AlterTable
+ALTER TABLE "Assignment" ALTER COLUMN "courseId" SET DATA TYPE TEXT;
+
+-- AlterTable
+ALTER TABLE "Course" ALTER COLUMN "createdBy" SET DATA TYPE TEXT,
+ALTER COLUMN "students" SET DATA TYPE TEXT[];
+
+-- AlterTable
+ALTER TABLE "File" ALTER COLUMN "uploadedBy" SET DATA TYPE TEXT;
+
+-- AlterTable
+ALTER TABLE "Lecture" ALTER COLUMN "courseId" SET DATA TYPE TEXT;
+
+-- AlterTable
+ALTER TABLE "Submission" ALTER COLUMN "assignmentId" SET DATA TYPE TEXT,
+ALTER COLUMN "studentId" SET DATA TYPE TEXT;

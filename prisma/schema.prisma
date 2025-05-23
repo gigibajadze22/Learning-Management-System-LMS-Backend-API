@@ -3,56 +3,58 @@ generator client {
 }
 
 datasource db {
-  provider = "postgresql" // თუ სხვაა, ჩაანაცვლე შენს მიხედვით
+  provider = "postgresql"
   url      = env("DATABASE_URL")
 }
 
 model User {
-  id       String  @id @default(uuid())
+  id       Int     @id @default(autoincrement())
   name     String
   email    String  @unique
   password String
   role     String  @default("student")
   avatar   String?
+  otpCode      String?   @db.VarChar(6)
+  otpExpiry    DateTime? @db.Timestamp(6)
 }
 
 model Course {
-  id          String   @id @default(uuid())
+  id          Int      @id @default(autoincrement())
   title       String
   description String
-  createdBy   String // instructorId იქნება ამ ველში
-  students    String[] // მომხმარებლების ID-ები მასივში
+  createdBy   String
+  students    String[]
 }
 
 model Lecture {
-  id          String   @id @default(uuid())
+  id          Int      @id @default(autoincrement())
   title       String
   content     String
-  courseId    String
+  courseId    Int
   videoUrl    String?
-  attachments String[] // ფაილების URL-ები ან id-ები შეიძლება
+  attachments String[]
 }
 
 model Assignment {
-  id          String   @id @default(uuid())
+  id          Int      @id @default(autoincrement())
   title       String
   description String
-  courseId    String
+  courseId    Int
   dueDate     DateTime
 }
 
 model Submission {
-  id           String   @id @default(uuid())
+  id           Int      @id @default(autoincrement())
   assignmentId String
-  studentId    String
+  studentId    Int
   file         String
   submittedAt  DateTime @default(now())
   grade        Int?
 }
 
 model File {
-  id         String @id @default(uuid())
+  id         Int    @id @default(autoincrement())
   filename   String
   url        String
-  uploadedBy String
+  uploadedBy Int
 }
